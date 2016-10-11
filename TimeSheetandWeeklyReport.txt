@@ -1,0 +1,40 @@
+Time sheet  & weekly report (Jun Su Jang)
+
+Nov 16	- Met with YuYang (mentor)
+Nov 20(5hrs) 	- tried to install pygame, but failed
+		- using basic animation (rectangles, etc...), drew basic set up of the game
+		- using spacebar to shoot didn't work so well, so decided to use mouse click
+Nov 21(5hrs)	-set up the power gauge
+		-shooting became feasible
+		-drew the basic user interaction part of the game
+Nov 22(5hrs)	-binded all the keys and mousepressed
+		-set wind/timer
+		-basic structure of the game (if I were to have only user playing without AI) was done
+Nov 23(6hrs)	-Review classes and tried to convert the file into classes, but couldn't finish
+Nov 24(2hrs)	-continued with converting into classes
+NOv 25(9hrs)	-In the process of converting into classes, ran into Tkinter problems and roots
+		-Debugging and converting went on
+Nov 26(9hrs30min-Class finally worked
+		-added turns
+		-AI's are able to shoot by calculating the distance between the opponent
+		-put system of teams
+Nov 27(10hrs)	-Tried to allow AI to move left and right and move angle in a smart way, but couldn't
+		-Decided to use 55 as a default and the only angle for the AI
+		-Added HPreduction and game over
+		-Expeiment with image.put and image.get
+		-Learned to use PIL
+Nov 28(13hrs)	-Calculate the physics of projectile for the AI - works somewhat
+		-Come up with ways to create groove/ explosion
+		-Experimented with PIL
+Nov 29(10hrs)	-Incorporated PIL into the game and got rotation happening/animation
+Nov 30(9hrs)	-Get the drawing of the terrain feasible and used in the game
+Dec 1 (8hrs) 	-Debugging bomb drops/groove
+		-Now that I can draw the terrain, I needed new way to detect the position/legal move
+Dec 2 (6hrs)	-Started working on different screens
+		-debugging AI movement and bomb drop/groove
+Dec 3 (6hrs)	-Drew different screens of the game and incorporated them into codes
+Dec 4 (13hrs)	-fixed styles of the game
+		-Added special weapon
+		-Added new modes to the game
+		-fix the making groove problem
+

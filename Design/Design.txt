@@ -1,0 +1,111 @@
+Design Document-Space Worms
+(Jun Su Jang)
+
+Projectile
+
+Although this project does not solve any "world issue", it incorporates different features of games with similar
+theme(shooting game). 
+
+The game requires a lot of different features, which required some critical thinking. 
+
+The fundamental of the game is to create a projectile while shooting and making sure that when it lands, it 
+creates a groove.
+
+The projectile is calculated in the function called, calcProjectile. In this, I add x and y component of the 
+power to the current position of the cannon ball. Then this move is checked if it is legal. If so, it will proceed
+to the next movement in the projectile. If it hits a color, r=162, g=1 and b=1, which is the color of the terrain,
+the projectile stops at that point.
+
+In the process of checking if the movement of the projectile is legal, what I did was to find a linear slope of 
+a line that connects the current position with the future position. Then check all the point in between. This is
+done in the calcHitXY function. The downside of this function is that checking takes time, thus there is a slight
+delay right before it hits the terrain. This is actually using the idea of a derivative in a big scale. 
+
+In order to draw the groove, I have used image.put and image.get. When the cannon ball hits the terrain, 
+I collect a list of pixels that form a small circle around the hit point in getPixelsC function. 
+Then the same pixels at the background overwrites each of those pixels at the terrain image, coloring in the same
+color. Because I am using image.put and image.get, there is also some delay. 
+
+Furthermore, in order to be able to create a more realistic projectile, I have created windINIT and projectileINIT.
+At the beginning of projectile, cx and cy of the ball should be at the original position, and after that one frame,
+windINIT and projectileINIT are called to set self.pVx, self.pVy, self.WindX, and self.WindY that are added onto
+the cx and cy every time so that a nice projectile can be drawn. Without INIT functions, the projectile starts
+not from the player's bazooka but a frame supposedly after that. 
+
+On top of that, when the cannon ball hit, the turn is over.
+
+
+Power gauge
+
+when a fire button (just a drawn rectangles because button could not be used to hold for time) is pressed,
+until it is released the power increases by a certain amount. The power is in the end the velocity added 
+onto the cx and cy. Wind works the same way.
+
+
+PIL and rotation of image
+
+One of the features of the game is the animation and the ability to rotate according to the slope of the terrain
+at that point. In order to do so, I needed to store an information in PIL, setting it as self.p, and the photoimage
+of that information was set to self.p1. PIL allows rotation of an image. Hence, I collected the terrain height 
+3 pixels in front and behind the current position and calculated the gradient, which was used to calculate the 
+rotation if the image's body angle was set to 0 degree. However, if I kept rotating, the image would have been
+distorted, thus I had to reset the picture every time by calling setPic() or setShotPic()
+
+Detecting the terrain top to stand on
+
+It was difficult to get the image to follow the terrain's top all the time. In order to do so, I need four different
+functions: getTy, getTopTy, getPyUp, and getPyDown. Each of them have their functions described in the code, but 
+they are used to locate where is the next appropriate place to be. 
+
+Special Attack
+
+Another fun part of the game is the special attack. This was rather simple in that, when clicked, I calculated
+a linear function from the position of the current ball to the clicked target. Then this was used to make the 
+cannon ball go straight to the target linearly.
+
+Angle
+
+To calculate the current angle, maximum and minimum angle. The orientation of 0degree in Tkinter is not the same
+as that of 0 degree that we use in real life. Thus there were some semi-hardcoded function resetting the angle so
+that the angle was displayed "normally" for users. This can be seen in setUserA, setA, setAIA. 
+
+AI
+
+The AI is not perfect. But it can be really accurate, ok and bad depending where the opponent is. To calculate
+the power at which the AI releases the cannon ball was calculated in calculateAIpower. It incorporates kinematics
+in order to calculate suitable power.
+
+Moving AI is rather simple. It calls random index, which choses the move from self.possibleAImove. If that chosen
+move is legal, then the AI moves, if not, another legal move is found. This can be seen in AImoveLimit function.
+The legalAImove checks if in its future path if the player will hit a ditch or not. 
+
+When the user choses the mode (normal, and catchmeifyoucan), self.possibleMoves is set so that the AI has moves that
+lets itself to stay in the current position or always moves. 
+
+Drawing Terrain
+
+Finally, the user can draw a terrain in my game. In order to do so, I have decided that I will use empty image,
+and an outline should be drawn with a color, r=162, g=1, and b=1. This is done in drawPencil, which draws a red
+circle when clicked. While mouse is pressed, the draw function is called overtime, and to decrease the gap between
+the circle, I have set self.timerfireddelay to 1 from 50(default setting) just for this case. After an outline is
+drawn and if spacebar is pressed, self.done becomes true and calls self.floodFill. This function detects the top
+of the outline using self.getTopTy, and setDrawRGB colors in all the pixels beneath the outline x coordinates with 
+the same color as the outline's. The way that I have set my game (the detection system) allows my players to just
+play normally on any terrain drawn as long as it is not punctured at the beginning. 
+
+
+
+For the User Interface, I have five different screens. The beginning main menu allows user to choose the mode,
+choose the number of players, the user ID. The modes sets different self.possibleAIMoves. Then you can choose to 
+see an introduction or to go to the select Map screen. In this screen one can select the background and screen or
+decide to draw on his/her own. Then they can play the game. The main way of incorporating all of these screens
+were to have self.openMain=True, self.openInstruction=False, etc... 
+
+In the game, the user interacts with AIs and the game through the userInteraction function. It gives an indication
+of the left-over stamina, what weapon to select, power gauge and what mode one is playing in. There is also wind
+displayed on top and the timer on top right allows user to see how much time is left. Of course, if the user wishes
+to exit one can do so by pressing exit or pause button on the bottom right corner. All of them are drawn in the 
+fuction drawUserInteraction. Thus, the user can still enjoy the game by seeing everything above the userinteraction
+area and controlling his/her own worm.
+
+
