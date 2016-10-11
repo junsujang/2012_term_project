@@ -1,2 +1,6 @@
 # virtualenv
 env/*
+
+# idea
+.idea
+.idea/*
